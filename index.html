@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Students Information</title>
+<link rel="stylesheet" href="student.css">
+</head>
+<body>
+<h2> Sama Osama 23101571</h2>
+<h3>Students List</h3>
+<table id="studentsTable">
+<tr>
+<th>Name</th>
+<th>ID</th>
+<th>Level</th>
+</tr>
+</table>
+<button onclick="showTranscripts()">Show Transcripts</button>
+<button onclick="addStudent()">Add New Student</button>
+<button onclick="deleteStudent()">Delete Student</button>
+<div id="transcripts"></div>
+<script>
+let students = [
+ {name: "Ali", id: "23101520", level: "1"},
+ {name: "Sara", id: "23101521", level: "2"},
+ {name: "Omar", id: "23101522", level: "3"},
+ {name: "Laila", id: "23101523", level: "4"},
+ {name: "Mona", id: "23101524", level: "2"}
+];
+function displayStudents() {
+ let table = document.getElementById("studentsTable");
+ table.innerHTML = "<tr><th>Name</th><th>ID</th><th>Level</th><th>Math</th><th>Prog</th><th>Logic</th><th>DB</th><th>AI</th></tr>";
+ for (let i=0; i<students.length; i++) {
+   let s = students[i];
+   table.innerHTML += `<tr>
+<td>${s.name}</td>
+<td>${s.id}</td>
+<td>${s.level}</td>
+<td><input type="number" id="math${i}"></td>
+<td><input type="number" id="prog${i}"></td>
+<td><input type="number" id="logic${i}"></td>
+<td><input type="number" id="db${i}"></td>
+<td><input type="number" id="ai${i}"></td>
+</tr>`;
+ }
+}
+function addStudent() {
+ let name = prompt("Name:");
+ let id = prompt("ID:");
+ let level = prompt("Level:");
+ if (!name || !id || !level) return;
+ students.push({name, id, level});
+ displayStudents();
+}
+function deleteStudent() {
+ let id = prompt("Enter ID to delete:");
+ for (let i = 0; i < students.length; i++) {
+   if (students[i].id === id) {
+     students.splice(i, 1);
+     displayStudents();
+     return;
+   }
+ }
+ alert("ID not found!");
+}
+function showTranscripts() {
+ let output = "";
+ for (let i=0; i<students.length; i++) {
+   let s = students[i];
+   let math = document.getElementById(`math${i}`).value || 0;
+   let prog = document.getElementById(`prog${i}`).value || 0;
+   let logic = document.getElementById(`logic${i}`).value || 0;
+   let db = document.getElementById(`db${i}`).value || 0;
+   let ai = document.getElementById(`ai${i}`).value || 0;
+   output += `<b>${s.name}</b> (ID: ${s.id}) - Level ${s.level}
+<ul>
+<li>Math: ${math}</li>
+<li>Programming: ${prog}</li>
+<li>Logic: ${logic}</li>
+<li>Database: ${db}</li>
+<li>AI: ${ai}</li>
+</ul>`;
+ }
+ document.getElementById("transcripts").innerHTML = output;
+}
+displayStudents();
+</script>
+</body>
+</html>
