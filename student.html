@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Students Information</title>
+<link rel="stylesheet" href="student.css">
+</head>
+<body>
+<h2> Sama Osama 23101571</h2>
+<h3>Students List</h3>
+<table id="studentsTable">
+<tr>
+<th>Name</th>
+<th>ID</th>
+<th>Level</th>
+</tr>
+</table>
+<button onclick="showTranscripts()">Show Transcripts</button>
+<button onclick="addStudent()">Add New Student</button>
+<button onclick="deleteStudent()">Delete Student</button>
+<div id="transcripts"></div>
+<script>
+let students = [
+ {name: "Ali", id: "23101520", level: "1"},
+ {name: "Sara", id: "23101521", level: "2"},
+ {name: "Omar", id: "23101522", level: "3"},
+ {name: "Laila", id: "23101523", level: "4"},
+ {name: "Mona", id: "23101524", level: "2"}
+];
+function displayStudents() {
+ let table = document.getElementById("studentsTable");
+ table.innerHTML = `
+<tr>
+<th>Name</th>
+<th>ID</th>
+<th>Level</th>
+</tr>`;
+ students.forEach(s => {
+   table.innerHTML += `
+<tr>
+<td>${s.name}</td>
+<td>${s.id}</td>
+<td>${s.level}</td>
+</tr>`;
+ });
+}
+function showTranscripts() {
+ let output = "<h3>Students Transcripts</h3>";
+ students.forEach(s => {
+   output += `
+<div style='margin-bottom:15px'>
+<strong>${s.name}</strong> (ID: ${s.id}) — Level ${s.level}
+<ul>
+<li>Mathematics: ${Math.floor(Math.random() * 40 + 60)}</li>
+<li>Programming: ${Math.floor(Math.random() * 40 + 60)}</li>
+<li>Logic Design: ${Math.floor(Math.random() * 40 + 60)}</li>
+<li>Database: ${Math.floor(Math.random() * 40 + 60)}</li>
+<li>Artificial Intelligence: ${Math.floor(Math.random() * 40 + 60)}</li>
+</ul>
+</div>`;
+ });
+ document.getElementById("transcripts").innerHTML = output;
+}
+function addStudent() {
+ let name = prompt("Enter student name:");
+ let id = prompt("Enter student ID:");
+ let level = prompt("Enter student level:");
+ if (!name || !id || !level) {
+   alert("Please enter all fields!");
+   return;
+ }
+ students.push({name, id, level});
+ displayStudents();
+}
+function deleteStudent() {
+ let id = prompt("Enter student ID to delete:");
+ let index = students.findIndex(s => s.id === id);
+ if (index === -1) {
+   alert("Student not found!");
+   return;
+ }
+ students.splice(index, 1);
+ displayStudents();
+}
+displayStudents();
+</script>
+</body>
+</html>
